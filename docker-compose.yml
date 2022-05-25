@@ -12,9 +12,9 @@ services:
   project:
     tty: true
     build: ./
+    command: sh start.sh
     env_file: .env
     working_dir: /opt/project
-    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./src:/opt/project
     links:
