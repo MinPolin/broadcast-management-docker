@@ -1,0 +1,23 @@
+version: "3.0"
+
+services:
+  postgresqldg:
+    image: postgres:9.3
+    env_file: .env
+    volumes:
+      - ./dockerfiles/pgdata:/var/lib/postgresql/data/pgdata
+    ports:
+      - "5433:5432"
+
+  project:
+    tty: true
+    build: ./
+    env_file: .env
+    working_dir: /opt/project
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./src:/opt/project
+    links:
+      - postgresqldg
+    ports:
+      - "8000:8000"
